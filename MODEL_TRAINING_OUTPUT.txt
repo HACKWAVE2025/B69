@@ -1,0 +1,70 @@
+============================================================
+🧠 Training Isolation Forest with Hyperparameter Tuning
+============================================================
+
+📂 Loading custom dataset from: data/huggingface_combined.csv
+   Loaded 202 rows, 10 columns
+   Columns: duration, protocol, src_port, dst_port, src_ip, dst_ip, anomaly, bytes, packets, label
+   📊 Detected flow data format - extracting features using FeatureExtractor...
+   ✅ Extracted 202 feature vectors with 8 features
+   📊 Found labels: 69 anomalies, 133 normal
+
+📊 Train set: 161 samples
+📊 Test set: 41 samples
+
+🔍 Starting hyperparameter tuning...
+   This may take a few minutes...
+
+[1/160] Testing: contamination=0.01, n_estimators=100, max_samples=auto, bootstrap=True
+   ✅ New best! Accuracy: 0.7073 (70.73%), F1: 0.0000 (0.00%), Combined: 0.4951
+[2/160] Testing: contamination=0.01, n_estimators=100, max_samples=auto, bootstrap=False
+   ✅ New best! Accuracy: 0.7317 (73.17%), F1: 0.0000 (0.00%), Combined: 0.5122
+[3/160] Testing: contamination=0.01, n_estimators=100, max_samples=256, bootstrap=True
+[4/160] Testing: contamination=0.01, n_estimators=100, max_samples=256, bootstrap=False
+[5/160] Testing: contamination=0.01, n_estimators=100, max_samples=512, bootstrap=True
+   ✅ New best! Accuracy: 0.7561 (75.61%), F1: 0.1429 (14.29%), Combined: 0.5663
+[6/160] Testing: contamination=0.01, n_estimators=100, max_samples=512, bootstrap=False
+...
+[continues through hyperparameter combinations]
+...
+[42/160] Testing: contamination=0.02, n_estimators=200, max_samples=512, bootstrap=True
+   ✅ New best! Accuracy: 0.7805 (78.05%), F1: 0.2857 (28.57%), Combined: 0.6207
+...
+[more iterations]
+...
+
+============================================================
+📊 Final Model Evaluation
+============================================================
+
+⚙️  Best Parameters:
+   contamination: 0.1
+   n_estimators: 200
+   max_samples: auto
+   bootstrap: True
+
+📈 Test Set Metrics:
+   Accuracy:  0.7805 (78.05%)
+   Precision: 0.6667 (66.67%)
+   Recall:    0.2857 (28.57%)
+   F1-Score:  0.4000 (40.00%)
+
+📋 Classification Report:
+              precision    recall  f1-score   support
+
+      Normal       0.80      0.94      0.87        32
+     Anomaly       0.67      0.29      0.40         9
+
+    accuracy                           0.78        41
+   macro avg       0.73      0.61      0.63        41
+weighted avg       0.77      0.78      0.75        41
+
+🔢 Confusion Matrix:
+                 Predicted
+              Normal  Anomaly
+Actual Normal     30        2
+       Anomaly      6        3
+
+✅ Isolation Forest trained and saved to ml_engine/models/isolation_forest.pkl
+⚠️  Accuracy 78.05% is below target 75.0%
+

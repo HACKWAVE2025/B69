@@ -8,6 +8,7 @@ const Alerts = () => {
   const [stats, setStats] = useState(null)
   const [loading, setLoading] = useState(true)
   const [statusFilter, setStatusFilter] = useState('all')
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     loadAlerts()
@@ -29,6 +30,7 @@ const Alerts = () => {
       setAlerts(data)
     } catch (error) {
       console.error('Error loading alerts:', error)
+      setError(error.message || 'Failed to load alerts.')
     } finally {
       setLoading(false)
     }
@@ -58,6 +60,26 @@ const Alerts = () => {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="text-gray-500">Loading alerts...</div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
+          <h3 className="text-red-800 font-semibold mb-2">Error</h3>
+          <p className="text-red-600 text-sm">{error}</p>
+          <button
+            onClick={() => {
+              setError(null)
+              loadAlerts()
+            }}
+            className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+          >
+            Retry
+          </button>
+        </div>
       </div>
     )
   }

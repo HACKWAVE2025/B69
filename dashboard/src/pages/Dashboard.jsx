@@ -9,6 +9,7 @@ const Dashboard = () => {
   const [alertStats, setAlertStats] = useState(null)
   const [flowStats, setFlowStats] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     loadData()
@@ -31,6 +32,7 @@ const Dashboard = () => {
       setFlowStats(flowStatsData)
     } catch (error) {
       console.error('Error loading dashboard data:', error)
+      setError(error.message || 'Failed to load dashboard data. Please check if the backend is running.')
     } finally {
       setLoading(false)
     }
@@ -40,6 +42,26 @@ const Dashboard = () => {
     return (
       <div className="flex justify-center items-center h-64">
         <div className="text-gray-500">Loading dashboard...</div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md">
+          <h3 className="text-red-800 font-semibold mb-2">Connection Error</h3>
+          <p className="text-red-600 text-sm">{error}</p>
+          <button
+            onClick={() => {
+              setError(null)
+              loadData()
+            }}
+            className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+          >
+            Retry
+          </button>
+        </div>
       </div>
     )
   }
