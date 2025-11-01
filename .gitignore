@@ -186,6 +186,6 @@ coverage.xml
 local_settings.py
 local_config.py
 
-# Keep documentation files (track them)
-# Note: Documentation .md files are NOT ignored (they should be tracked)
+# Documentation files
+*.md
 
