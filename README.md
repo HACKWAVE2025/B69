@@ -104,7 +104,5 @@ netsage-ml/
 ✅ Modular ML architecture (swap models easily)
 ✅ React dashboard for real-time visualization
 
-## 📝 License
 
-MIT
 
